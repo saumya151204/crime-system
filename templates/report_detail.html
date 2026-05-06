@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card p-4">
+
+<h2>{{ report.title }}</h2>
+
+<p>{{ report.description }}</p>
+
+<p><b> Location:</b> {{ report.location }}</p>
+
+<p><b>Status:</b> {{ report.get_status_display }}</p>
+
+{% if report.image %}
+    <img src="{{ report.image.url }}" width="300">
+{% endif %}
+
+</div>
+
+{% endblock %}

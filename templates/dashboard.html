@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+body {
+    background: radial-gradient(circle at top, #1e293b, #020617);
+    color: white;
+}
+
+.card-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.card-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card {
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+</style>
+
+<h2 class="mb-4 fw-bold"> Crime Dashboard</h2>
+
+<!-- STATS -->
+<div class="row mb-4">
+
+<div class="col-md-4">
+    <div class="card card-box stat-card p-3 text-warning">
+        <h5>Pending</h5>
+        <h3>{{ pending_count }}</h3>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="card card-box stat-card p-3 text-primary">
+        <h5>In Progress</h5>
+        <h3>{{ progress_count }}</h3>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="card card-box stat-card p-3 text-success">
+        <h5>Resolved</h5>
+        <h3>{{ resolved_count }}</h3>
+    </div>
+</div>
+
+</div>
+
+<!-- BUTTON -->
+<a href="/create/" class="btn btn-primary btn-custom mb-4">
+     New Crime Report
+</a>
+
+<!-- REPORTS -->
+<div class="row">
+
+{% for r in reports %}
+
+<div class="col-md-4 mb-4">
+
+    <div class="card card-box p-3 h-100">
+
+        <h5 class="fw-bold">{{ r.title }}</h5>
+
+        <p class="text-light">{{ r.description|truncatewords:15 }}</p>
+
+        <p><b>!</b> {{ r.location }}</p>
+
+        <!-- STATUS -->
+        <span class="badge bg-info">
+            {{ r.get_status_display }}
+        </span>
+
+        {% if r.image %}
+            <img src="{{ r.image.url }}" class="img-fluid mt-3 rounded">
+        {% endif %}
+
+        {% if r.get_status_display == 'Pending' %}
+            <a href="/update-status/{{ r.id }}/" class="btn btn-sm btn-success mt-2">
+                Mark as Resolved 
+            </a>
+        {% else %}
+            <a href="/update-status/{{ r.id }}/" class="btn btn-sm btn-warning mt-2">
+                Mark as Pending 
+            </a>
+        {% endif %}
+
+        <a href="/report/{{ r.id }}/" class="btn btn-outline-light btn-sm mt-3">
+            View Details →
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+    <p class="text-danger">No crime reports found </p>
+{% endfor %}
+
+</div>
+
+{% endblock %}

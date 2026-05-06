@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+body {
+    background: radial-gradient(circle at top, #1e293b, #020617);
+    color: white;
+}
+
+.card-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.form-control {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: white;
+}
+
+.form-control::placeholder {
+    color: #cbd5e1;
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    box-shadow: none;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    padding: 10px;
+}
+</style>
+
+<h2 class="mb-4 fw-bold"> Report a Crime</h2>
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+<div class="card card-box p-4">
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label class="mb-1">Title</label>
+    <input class="form-control mb-3" name="title" placeholder="Enter crime title">
+
+    <label class="mb-1">Description</label>
+    <textarea class="form-control mb-3" name="description" placeholder="Describe the incident"></textarea>
+
+    <label class="mb-1">Location</label>
+    <input class="form-control mb-3" name="location" placeholder="Enter location">
+
+    <label class="mb-1">Upload Evidence</label>
+    <input class="form-control mb-4" type="file" name="image">
+
+    <button class="btn btn-primary w-100 btn-custom">
+         Submit Report
+    </button>
+
+</form>
+
+</div>
+
+</div>
+</div>
+
+{% if messages %}
+<script>
+Swal.fire("Success", "Crime Report Submitted!", "success");
+</script>
+{% endif %}
+
+{% endblock %}
