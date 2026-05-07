@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from .forms import CrimeReportForm
 from .models import CrimeReport
 
@@ -20,6 +21,17 @@ def login_view(request):
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
+
+# REGISTER
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        User.objects.create_user(username=username, password=password)
+        return redirect('login')
+
+    return render(request, 'register.html')
 
 
 #  LOGOUT
