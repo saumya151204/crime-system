@@ -3,55 +3,55 @@
 
 <style>
 .form-control {
-    background: rgba(255,255,255,0.08);
-    border: none;
-    color: white;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
 }
 
 .form-control::placeholder {
-    color: #cbd5e1;
+    color: gray;
 }
 
-.form-control:focus {
-    background: rgba(255,255,255,0.12);
-    color: white;
-    box-shadow: none;
+.card-box {
+    border-radius: 10px;
 }
 </style>
 
-<h2 class="mb-4 fw-bold"> Create Account</h2>
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold text-center">Create Account</h2>
 
-<div class="row justify-content-center">
-<div class="col-md-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
 
-<div class="card card-box p-4">
-{% if error %}
-<p style="color:red;">{{ error }}</p>
-{% endif %}    
+            <div class="card card-box p-4">
 
-<form method="POST">
-    {% csrf_token %}
+                {% if error %}
+                <p style="color:red; text-align:center;">{{ error }}</p>
+                {% endif %}
 
-    <input class="form-control mb-3" name="username" placeholder="Username">
+                <form method="POST">
+                    {% csrf_token %}
 
-    <input class="form-control mb-3" name="email" placeholder="Email">
+                    <input class="form-control mb-3" name="username" placeholder="Username" required>
 
-    <input class="form-control mb-4" type="password" name="password" placeholder="Password">
+                    <input class="form-control mb-3" name="email" placeholder="Email" required>
 
-    <button class="btn btn-success w-100">
-         Register
-    </button>
+                    <input class="form-control mb-4" type="password" name="password" placeholder="Password" required>
 
-</form>
+                    <button class="btn btn-success w-100">
+                        Register
+                    </button>
+                </form>
 
-<p class="text-center mt-3">
-    Already have account? 
-    <a href="/login/" class="text-info">Login</a>
-</p>
+                <p class="text-center mt-3">
+                    Already have account? 
+                    <a href="/login/" class="text-info">Login</a>
+                </p>
 
-</div>
+            </div>
 
-</div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

@@ -29,15 +29,15 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        #  validation
-        if not username or not password:
-            return render(request, 'register.html', {'error': 'All fields required'})
+        # Empty check
+        if not username or not email or not password:
+            return render(request, 'register.html', {'error': 'All fields are required'})
 
-        #  duplicate user check
+        # Username exists check
         if User.objects.filter(username=username).exists():
             return render(request, 'register.html', {'error': 'Username already exists'})
 
-        # create user
+        # Create user
         User.objects.create_user(
             username=username,
             email=email,
@@ -47,7 +47,6 @@ def register(request):
         return redirect('login')
 
     return render(request, 'register.html')
-
 
 #  LOGOUT
 def logout_view(request):
