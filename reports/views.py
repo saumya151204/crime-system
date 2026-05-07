@@ -25,11 +25,25 @@ def login_view(request):
 # REGISTER
 def register(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']   
-        password = request.POST['password']
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-        User.objects.create_user(username=username, email=email, password=password)
+        #  validation
+        if not username or not password:
+            return render(request, 'register.html', {'error': 'All fields required'})
+
+        #  duplicate user check
+        if User.objects.filter(username=username).exists():
+            return render(request, 'register.html', {'error': 'Username already exists'})
+
+        # create user
+        User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+
         return redirect('login')
 
     return render(request, 'register.html')
