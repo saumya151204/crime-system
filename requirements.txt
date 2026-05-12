@@ -62,3 +62,6 @@ pyttsx3==2.99; sys_platform == "win32"
 sounddevice==0.5.5; sys_platform == "win32"
 SpeechRecognition==3.15.2; sys_platform == "win32"
 pywin32==311; sys_platform == "win32"
+dj-database-url
+psycopg2-binary
+gunicorn
